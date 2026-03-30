@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Vinyl Hour — April 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IM+Fell+English:ital@0;1&family=Josefin+Sans:wght@300;400;600&display=swap');
+
+  :root {
+    --cream:        #f5efd8;
+    --cream-dark:   #ece4c0;
+    --green:        #0d4a22;      /* deep dark green */
+    --green-mid:    #1a6b36;
+    --green-lt:     #2d8a4e;
+    --orange:       #e85d10;      /* vivid burnt orange */
+    --orange-lt:    #f07830;
+    --shadow:       rgba(0,0,0,0.18);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #b8ae90;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px 60px;
+    font-family: 'IM Fell English', Georgia, serif;
+  }
+
+  /* ── HIDDEN SVG FILTERS ── */
+  .svg-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+  /* ── PAPER ── */
+  .paper {
+    width: 100%;
+    max-width: 680px;
+    background-color: var(--cream);
+    position: relative;
+    padding: 0 0 50px;
+    box-shadow:
+      2px 3px 0 #a8a080,
+      5px 7px 0 rgba(0,0,0,0.10),
+      0 24px 60px rgba(0,0,0,0.32);
+    transform: rotate(-0.4deg);
+  }
+
+  /* paper grain overlay */
+  .paper::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* age stain — uneven yellowing */
+  .paper::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 15%, rgba(160,130,60,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 75%, rgba(140,110,50,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 20% at 50% 50%, rgba(100,80,30,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 9;
+    mix-blend-mode: multiply;
+  }
+
+  /* ── TORN EDGES ── */
+  .torn-top {
+    width: 100%; height: 28px;
+    background: var(--cream);
+    clip-path: polygon(
+      0% 100%, 1% 60%, 2.5% 85%, 4% 40%, 5.5% 70%, 7% 30%,
+      8.5% 65%, 10% 20%, 11.5% 55%, 13% 80%, 14.5% 35%,
+      16% 70%, 17.5% 25%, 19% 60%, 20.5% 90%, 22% 45%,
+      23.5% 75%, 25% 30%, 26.5% 65%, 28% 85%, 29.5% 40%,
+      31% 70%, 32.5% 20%, 34% 55%, 35.5% 80%, 37% 35%,
+      38.5% 65%, 40% 90%, 41.5% 40%, 43% 75%, 44.5% 25%,
+      46% 60%, 47.5% 85%, 49% 35%, 50.5% 70%, 52% 20%,
+      53.5% 55%, 55% 80%, 56.5% 40%, 58% 70%, 59.5% 25%,
+      61% 60%, 62.5% 90%, 64% 45%, 65.5% 75%, 67% 30%,
+      68.5% 65%, 70% 85%, 71.5% 35%, 73% 65%, 74.5% 20%,
+      76% 55%, 77.5% 80%, 79% 40%, 80.5% 75%, 82% 25%,
+      83.5% 60%, 85% 90%, 86.5% 45%, 88% 70%, 89.5% 30%,
+      91% 65%, 92.5% 85%, 94% 40%, 95.5% 70%, 97% 25%,
+      98.5% 55%, 100% 80%, 100% 100%
+    );
+    margin-bottom: -2px;
+  }
+
+  .torn-bottom {
+    width: 100%; height: 28px;
+    background: var(--cream);
+    clip-path: polygon(
+      0% 0%, 1.5% 40%, 3% 15%, 4.5% 60%, 6% 30%,
+      7.5% 70%, 9% 10%, 10.5% 50%, 12% 20%, 13.5% 65%,
+      15% 35%, 16.5% 80%, 18% 25%, 19.5% 55%, 21% 10%,
+      22.5% 45%, 24% 70%, 25.5% 30%, 27% 60%, 28.5% 15%,
+      30% 50%, 31.5% 80%, 33% 35%, 34.5% 65%, 36% 20%,
+      37.5% 55%, 39% 85%, 40.5% 40%, 42% 70%, 43.5% 25%,
+      45% 60%, 46.5% 10%, 48% 45%, 49.5% 75%, 51% 30%,
+      52.5% 65%, 54% 15%, 55.5% 50%, 57% 80%, 58.5% 35%,
+      60% 65%, 61.5% 20%, 63% 55%, 64.5% 85%, 66% 40%,
+      67.5% 70%, 69% 25%, 70.5% 60%, 72% 10%, 73.5% 45%,
+      75% 75%, 76.5% 30%, 78% 65%, 79.5% 20%, 81% 55%,
+      82.5% 80%, 84% 35%, 85.5% 70%, 87% 15%, 88.5% 50%,
+      90% 85%, 91.5% 40%, 93% 70%, 94.5% 25%, 96% 60%,
+      97.5% 30%, 100% 50%, 100% 0%
+    );
+    margin-top: -2px;
+  }
+
+  /* ── FOLD CREASES ── */
+  .fold {
+    position: absolute; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(to bottom,
+      transparent 0%, rgba(0,0,0,0.05) 20%,
+      rgba(0,0,0,0.09) 50%, rgba(0,0,0,0.05) 80%, transparent 100%);
+    box-shadow: 1px 0 4px rgba(0,0,0,0.04);
+    z-index: 5; pointer-events: none;
+  }
+
+  /* ── INK BLOTS ── */
+  .ink-blot {
+    position: absolute;
+    background: #2a1e0a;
+    border-radius: 50%;
+    filter: blur(5px);
+    opacity: 0.07;
+    pointer-events: none;
+    z-index: 6;
+  }
+
+  /* ── INNER CONTENT ── */
+  .inner {
+    padding: 0 44px;
+    position: relative;
+    z-index: 8;
+  }
+
+  /* ════════════════════════════════
+     FADED INK TEXT SYSTEM
+     All text runs through:
+     1. filter: url(#faded-ink) — turbulence displacement
+     2. mix-blend-mode: multiply — absorbs into paper grain
+     3. opacity < 1 — overall fade
+     4. text-shadow — ink bleed halo
+  ════════════════════════════════ */
+
+  .ink {
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+  }
+
+  .ink-heavy {
+    /* large display text — heavier displacement, more bleed */
+    filter: url(#faded-ink-heavy);
+    mix-blend-mode: multiply;
+  }
+
+  /* ── RULES ── */
+  .rule-thick {
+    border: none;
+    border-top: 4px solid var(--green);
+    margin: 0 0 4px;
+    opacity: 0.88;
+    filter: url(#faded-ink);
+  }
+  .rule-thin {
+    border: none;
+    border-top: 1px solid var(--green);
+    margin: 0 0 20px;
+    opacity: 0.70;
+  }
+  .rule-mid {
+    border: none;
+    border-top: 1.5px solid var(--green);
+    margin: 16px 0;
+    opacity: 0.70;
+  }
+  .rule-orange {
+    border: none;
+    border-top: 1.5px solid var(--orange);
+    margin: 6px 0 18px;
+    opacity: 0.78;
+  }
+
+  /* ── HEADER META ── */
+  .header-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.82;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead { text-align: center; margin-bottom: 6px; }
+
+  .masthead-eyebrow {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--orange);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+    opacity: 0.88;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+  }
+
+  .masthead-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 88px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -2px;
+    display: inline-block;
+    color: var(--green);
+    position: relative;
+    margin: 4px 0;
+    filter: url(#faded-ink-heavy);
+    mix-blend-mode: multiply;
+    opacity: 0.92;
+    text-shadow:
+      0 0 2px rgba(13,74,34,0.30),
+      1px 1px 3px rgba(13,74,34,0.15),
+      -1px 0px 2px rgba(13,74,34,0.10);
+  }
+
+  .masthead-title .hour {
+    color: var(--orange);
+    text-shadow:
+      0 0 2px rgba(232,93,16,0.30),
+      1px 1px 3px rgba(232,93,16,0.15),
+      -1px 0px 2px rgba(232,93,16,0.10);
+  }
+
+  .masthead-sub {
+    font-family: 'IM Fell English', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--green-mid);
+    display: block;
+    margin-top: 8px;
+    opacity: 0.80;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── EDITION ROW ── */
+  .edition-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.78;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+  }
+
+  .edition-center {
+    font-family: 'IM Fell English', Georgia, serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--orange);
+    letter-spacing: 1px;
+    flex: 1;
+    text-align: center;
+  }
+
+  .ornament {
+    display: inline-block;
+    color: var(--orange);
+    font-size: 13px;
+    margin: 0 8px;
+    opacity: 0.65;
+  }
+
+  /* ── TICKER ── */
+  .ticker-wrap {
+    background: var(--green);
+    opacity: 0.78;
+    overflow: hidden;
+    padding: 6px 0;
+    margin-bottom: 20px;
+    position: relative;
+    mix-blend-mode: multiply;
+  }
+
+  .ticker-wrap::before,
+  .ticker-wrap::after {
+    content: '';
+    position: absolute; top: 0; bottom: 0; width: 30px; z-index: 2;
+  }
+  .ticker-wrap::before { left: 0;  background: linear-gradient(to right, var(--green), transparent); }
+  .ticker-wrap::after  { right: 0; background: linear-gradient(to left,  var(--green), transparent); }
+
+  .ticker {
+    display: inline-block;
+    white-space: nowrap;
+    animation: ticker 60s linear infinite;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  @keyframes ticker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--orange);
+    display: inline-block;
+    padding: 2px 10px 1px;
+    margin-bottom: 14px;
+    border: 1.5px solid var(--orange);
+    opacity: 0.88;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+  }
+
+  /* ── SCHEDULE ── */
+  .schedule { width: 100%; border-collapse: collapse; }
+
+  .schedule tr {
+    border-bottom: 1px solid rgba(46,74,48,0.16);
+  }
+  .schedule tr:last-child { border-bottom: none; }
+  .schedule tr.alt { background: rgba(140,74,24,0.04); }
+
+  .schedule td { padding: 13px 8px; vertical-align: middle; }
+
+  .col-date {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--orange);
+    text-transform: uppercase;
+    white-space: nowrap;
+    width: 90px;
+    opacity: 0.90;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+    text-shadow: 0.5px 0.5px 1px rgba(232,93,16,0.20);
+  }
+
+  .col-dot {
+    width: 14px; text-align: center;
+    color: var(--green-mid); font-size: 7px; padding: 0 4px;
+    opacity: 0.65;
+  }
+
+  .col-time {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--orange);
+    white-space: nowrap;
+    width: 110px;
+    opacity: 0.88;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+  }
+
+  .col-venue {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: -0.3px;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+    opacity: 0.92;
+    text-shadow:
+      0 0 1px rgba(13,74,34,0.22),
+      1px 1px 2px rgba(13,74,34,0.10);
+  }
+
+  .col-sep {
+    width: 20px; text-align: center;
+    color: var(--orange); font-size: 12px; opacity: 0.45;
+  }
+
+  .col-theme {
+    font-family: 'IM Fell English', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--green-mid);
+    text-align: right; white-space: nowrap;
+    opacity: 0.80;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+  }
+
+  /* ── FOOTER ── */
+  .footer { text-align: center; margin-top: 8px; }
+
+  .footer-line1 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 6px;
+    opacity: 0.78;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+  }
+
+  .footer-handle {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--green);
+    letter-spacing: 1px;
+    opacity: 0.88;
+    filter: url(#faded-ink);
+    mix-blend-mode: multiply;
+    text-shadow: 0 0 1px rgba(13,74,34,0.22);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- SVG Filters — faded ink displacement + blur -->
+<svg class="svg-filters" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <!-- Light faded ink: small text, rules, labels -->
+    <filter id="faded-ink" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04 0.06"
+                    numOctaves="4" seed="8" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise"
+                         scale="1.4" xChannelSelector="R" yChannelSelector="G"
+                         result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="0.22" result="blurred"/>
+      <!-- slight alpha erosion -->
+      <feColorMatrix in="blurred" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 0.88 0" result="faded"/>
+      <feComposite in="faded" in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Heavy faded ink: large display/masthead type -->
+    <filter id="faded-ink-heavy" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025 0.035"
+                    numOctaves="5" seed="14" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise"
+                         scale="2.8" xChannelSelector="R" yChannelSelector="G"
+                         result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="0.45" result="blurred"/>
+      <!-- uneven ink: slightly dim, soft alpha -->
+      <feColorMatrix in="blurred" type="matrix"
+        values="0.95 0   0   0 0.01
+                0   0.95 0   0 0.01
+                0   0   0.92 0 0.01
+                0   0   0   0.82 0" result="faded"/>
+      <feComposite in="faded" in2="SourceGraphic" operator="in"/>
+    </filter>
+
+  </defs>
+</svg>
+
+<div class="paper">
+
+  <!-- Fold creases -->
+  <div class="fold" style="left:33.3%"></div>
+  <div class="fold" style="left:66.6%"></div>
+
+  <!-- Ink blots -->
+  <div class="ink-blot" style="width:18px;height:18px;top:11%;left:5%;transform:rotate(20deg)"></div>
+  <div class="ink-blot" style="width:10px;height:8px;top:36%;right:7%;transform:rotate(-15deg)"></div>
+  <div class="ink-blot" style="width:14px;height:10px;top:63%;left:8%;transform:rotate(35deg)"></div>
+  <div class="ink-blot" style="width:7px;height:11px;top:79%;right:5%;transform:rotate(10deg)"></div>
+  <div class="ink-blot" style="width:5px;height:5px;top:21%;left:41%;transform:rotate(-30deg)"></div>
+
+  <div class="torn-top"></div>
+
+  <div class="inner">
+
+    <div class="header-meta">
+      <span>Milwaukee, WI</span>
+      <span>Weekly Listening Session</span>
+      <span>Spring 2026</span>
+    </div>
+
+    <hr class="rule-thick">
+    <hr class="rule-thin">
+
+    <div class="masthead">
+      <span class="masthead-eyebrow">Sound Club Live &nbsp;·&nbsp; <span style="color:var(--green)">presents</span></span>
+      <span class="masthead-title">Vinyl <span class="hour">Hour</span></span>
+      <span class="masthead-sub">Bring your own vinyl — inspired by the theme or something you want to share</span>
+    </div>
+
+    <hr class="rule-mid">
+
+    <div class="edition-row">
+      <span>Vol. IV — No. 4</span>
+      <span class="edition-center">
+        <span class="ornament">❧</span>Crate Culture<span class="ornament">❧</span>
+      </span>
+      <span>33 RPM</span>
+    </div>
+
+    <hr class="rule-orange">
+
+    <div class="ticker-wrap">
+      <span class="ticker">
+        April Schedule &nbsp;·&nbsp; Midwest Sad &nbsp;·&nbsp; Zocalo &nbsp;·&nbsp; La Finca &nbsp;·&nbsp;
+        Open Spin &nbsp;·&nbsp; Virtual Vibes &nbsp;·&nbsp; Warm Samples &nbsp;·&nbsp; Sophist-pop &nbsp;·&nbsp;
+        Every Week · Free Entry &nbsp;·&nbsp; @mkesoundclub &nbsp;·&nbsp;
+        April Schedule &nbsp;·&nbsp; Midwest Sad &nbsp;·&nbsp; Zocalo &nbsp;·&nbsp; La Finca &nbsp;·&nbsp;
+        Open Spin &nbsp;·&nbsp; Virtual Vibes &nbsp;·&nbsp; Warm Samples &nbsp;·&nbsp; Sophist-pop
+      </span>
+    </div>
+
+    <div class="section-label">The April Rotation</div>
+
+    <table class="schedule">
+      <tr>
+        <td class="col-date">Apr 02</td>
+        <td class="col-dot">◆</td>
+        <td class="col-venue">Midwest Sad</td>
+        <td class="col-time">7PM – 9PM</td>
+        <td class="col-sep">|</td>
+        <td class="col-theme">Virtual Vibes</td>
+      </tr>
+      <tr class="alt">
+        <td class="col-date">Apr 10</td>
+        <td class="col-dot">◆</td>
+        <td class="col-venue">Zocalo</td>
+        <td class="col-time">7PM – 9PM</td>
+        <td class="col-sep">|</td>
+        <td class="col-theme">Open Spin</td>
+      </tr>
+      <tr>
+        <td class="col-date">Apr 16</td>
+        <td class="col-dot">◆</td>
+        <td class="col-venue">Midwest Sad</td>
+        <td class="col-time">7PM – 9PM</td>
+        <td class="col-sep">|</td>
+        <td class="col-theme">Warm Samples</td>
+      </tr>
+      <tr class="alt">
+        <td class="col-date">Apr 17</td>
+        <td class="col-dot">◆</td>
+        <td class="col-venue">La Finca</td>
+        <td class="col-time">6PM – 8PM</td>
+        <td class="col-sep">|</td>
+        <td class="col-theme">Sophist-pop</td>
+      </tr>
+      <tr>
+        <td class="col-date">Apr 24</td>
+        <td class="col-dot">◆</td>
+        <td class="col-venue">Zocalo</td>
+        <td class="col-time">7PM – 9PM</td>
+        <td class="col-sep">|</td>
+        <td class="col-theme">Open Spin</td>
+      </tr>
+      <tr class="alt">
+        <td class="col-date">Apr 30</td>
+        <td class="col-dot">◆</td>
+        <td class="col-venue">Midwest Sad</td>
+        <td class="col-time">7PM – 9PM</td>
+        <td class="col-sep">|</td>
+        <td class="col-theme">Open Spin</td>
+      </tr>
+    </table>
+
+    <hr class="rule-mid">
+
+    <div class="footer">
+      <div class="footer-line1">Bring &nbsp;·&nbsp; Share &nbsp;·&nbsp; Discover</div>
+      <div class="footer-handle">
+        <span class="ornament">✦</span> @mkesoundclub <span class="ornament">✦</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="torn-bottom"></div>
+
+</div>
+</body>
+</html>
