@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>The Vinyl Hour — May 2026 · Sound Club Live</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700&family=IM+Fell+English:ital@0;1&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --color-bg:           #f5efd8;
+  --color-primary:      #0d4a22;
+  --color-secondary:    #1a6b36;
+  --color-accent:       #2d8a4e;
+  --color-highlight:    #e85d10;
+  --color-base:         #b8ae90;
+  --color-ink:          #2a1e0a;
+
+  --font-display:       'Playfair Display', Georgia, serif;
+  --font-ui:            'Josefin Sans', Helvetica, sans-serif;
+  --font-script:        'IM Fell English', Georgia, serif;
+
+  --space-2xl:          90px;
+
+  --ink-1: 0.92;
+  --ink-2: 0.85;
+  --ink-3: 0.80;
+  --ink-4: 0.78;
+}
+
+body {
+  width: 1080px;
+  height: 1350px;
+  background-color: var(--color-base);
+  font-family: var(--font-ui);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.canvas {
+  width: 1080px;
+  height: 1350px;
+  background-color: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.age-stain {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 12% 8%,  rgba(160,130,60,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 70% at 88% 85%, rgba(140,110,50,0.09) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 28% at 50% 50%, rgba(100,80,30,0.04)  0%, transparent 70%),
+    radial-gradient(ellipse 25% 18% at 80% 25%, rgba(160,90,40,0.07)  0%, transparent 70%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 9;
+}
+
+.grain-overlay {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ink-blot {
+  position: absolute;
+  background: var(--color-ink);
+  border-radius: 50%;
+  filter: blur(4px);
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 8;
+}
+
+.content {
+  position: absolute;
+  inset: var(--space-2xl);
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOP BAR */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+.top-bar .brand {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  opacity: var(--ink-1);
+  filter: url(#faded-ink);
+  mix-blend-mode: multiply;
+}
+.top-bar .vol {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  opacity: var(--ink-4);
+  filter: url(#faded-ink);
+  mix-blend-mode: multiply;
+}
+
+/* LOGO LOCKUP */
+.logo-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 12px 0 10px;
+}
+
+.logo-vinyl {
+  width: 460px;
+  height: 460px;
+}
+.logo-vinyl svg { display: block; width: 100%; height: 100%; }
+
+.logo-title {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.logo-title .word {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 88px;
+  letter-spacing: 0.06em;
+  color: var(--color-ink);
+  text-transform: uppercase;
+  display: inline-block;
+  line-height: 1;
+  padding-bottom: 12px;
+  border-bottom: 4px solid var(--color-highlight);
+  filter: url(#faded-ink-heavy);
+  mix-blend-mode: multiply;
+  opacity: var(--ink-1);
+}
+
+.logo-subtitle {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  color: var(--color-secondary);
+  opacity: var(--ink-3);
+  filter: url(#faded-ink);
+  mix-blend-mode: multiply;
+  margin-top: 14px;
+  text-align: center;
+}
+
+/* BODY ROW */
+.body-row {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 50px;
+  margin-top: 26px;
+  flex: 1;
+  align-content: start;
+}
+
+/* SCHEDULE — single column, larger, more legible */
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.schedule .event {
+  font-family: var(--font-ui);
+  color: var(--color-primary);
+  filter: url(#faded-ink);
+  mix-blend-mode: multiply;
+  text-transform: uppercase;
+}
+
+.schedule .theme {
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  opacity: var(--ink-1);
+}
+
+.schedule .theme .num {
+  color: var(--color-highlight);
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.schedule .when {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--color-highlight);
+  opacity: 0.92;
+  margin-top: 6px;
+  margin-left: 32px;
+}
+
+.schedule .where {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--color-secondary);
+  opacity: var(--ink-3);
+  margin-top: 3px;
+  margin-left: 32px;
+}
+
+/* META BLOCK */
+.meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.swatches { display: flex; gap: 4px; margin-bottom: 4px; }
+.swatch { width: 38px; height: 38px; border: 1px solid rgba(13,74,34,0.30); }
+
+.meta-line {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  opacity: var(--ink-3);
+  filter: url(#faded-ink);
+  mix-blend-mode: multiply;
+  line-height: 1.4;
+}
+.meta-line.divider {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--color-secondary);
+  opacity: var(--ink-2);
+}
+.meta-line.accent {
+  color: var(--color-highlight);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  font-size: 13px;
+}
+.meta-line.runtime {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  font-weight: 400;
+  color: var(--color-secondary);
+  margin-top: 4px;
+}
+
+/* FOOTER */
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.scan-mark {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.scan-mark .barcode {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 32px;
+}
+.scan-mark .barcode span {
+  display: block;
+  width: 3px;
+  background: var(--color-primary);
+  opacity: var(--ink-2);
+}
+.scan-mark .handle {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--color-primary);
+  opacity: var(--ink-2);
+  text-transform: uppercase;
+  filter: url(#faded-ink);
+  mix-blend-mode: multiply;
+  margin-left: 4px;
+}
+
+.month-stamp {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 44px;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+  opacity: var(--ink-1);
+  filter: url(#faded-ink-heavy);
+  mix-blend-mode: multiply;
+  text-transform: uppercase;
+}
+.month-stamp .twentysix { color: var(--color-highlight); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;pointer-events:none">
+  <defs>
+    <filter id="faded-ink" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04 0.06" numOctaves="4" seed="8" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.4" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="0.22" result="blurred"/>
+      <feColorMatrix in="blurred" type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.9 0" result="faded"/>
+      <feComposite in="faded" in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="faded-ink-heavy" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025 0.035" numOctaves="5" seed="14" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+      <feGaussianBlur in="displaced" stdDeviation="0.4" result="blurred"/>
+      <feColorMatrix in="blurred" type="matrix"
+        values="0.95 0 0 0 0.01  0 0.95 0 0 0.01  0 0 0.92 0 0.01  0 0 0 0.85 0" result="faded"/>
+      <feComposite in="faded" in2="SourceGraphic" operator="in"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="canvas">
+
+  <div class="age-stain"></div>
+  <div class="grain-overlay"></div>
+
+  <div class="ink-blot" style="width:14px;height:14px;top:6%;left:4%;transform:rotate(20deg)"></div>
+  <div class="ink-blot" style="width:10px;height:8px;top:38%;right:6%;transform:rotate(-15deg)"></div>
+  <div class="ink-blot" style="width:12px;height:10px;top:78%;left:7%;transform:rotate(35deg)"></div>
+  <div class="ink-blot" style="width:9px;height:11px;top:62%;right:9%;transform:rotate(10deg)"></div>
+
+  <div class="content">
+
+    <div class="top-bar">
+      <div class="brand">SOUND CLUB LIVE</div>
+      <div class="vol">VOL. IV · ED. 05</div>
+    </div>
+
+    <!-- LOGO LOCKUP: vinyl + underlined title -->
+    <div class="logo-lockup">
+
+      <div class="logo-vinyl">
+        <svg viewBox="0 0 470 470" xmlns="http://www.w3.org/2000/svg">
+
+          <!-- Record body — flat ink, no gradient, no sheen -->
+          <circle cx="235" cy="235" r="232" fill="#1a1410"/>
+          <circle cx="235" cy="235" r="232" fill="none" stroke="#0a0700" stroke-width="1.6"/>
+
+          <!-- Concentric grooves — denser, visible, flat tone -->
+          <g fill="none" stroke="#3d3326" stroke-width="0.85" opacity="1">
+            <circle cx="235" cy="235" r="226"/>
+            <circle cx="235" cy="235" r="221"/>
+            <circle cx="235" cy="235" r="216"/>
+            <circle cx="235" cy="235" r="211"/>
+            <circle cx="235" cy="235" r="206"/>
+            <circle cx="235" cy="235" r="200"/>
+            <circle cx="235" cy="235" r="194"/>
+            <circle cx="235" cy="235" r="188"/>
+            <circle cx="235" cy="235" r="181"/>
+            <circle cx="235" cy="235" r="174"/>
+            <circle cx="235" cy="235" r="167"/>
+            <circle cx="235" cy="235" r="159"/>
+            <circle cx="235" cy="235" r="151"/>
+            <circle cx="235" cy="235" r="143"/>
+            <circle cx="235" cy="235" r="134"/>
+            <circle cx="235" cy="235" r="125"/>
+            <circle cx="235" cy="235" r="116"/>
+            <circle cx="235" cy="235" r="107"/>
+          </g>
+
+          <!-- Orange center label — flat fill, no gradient -->
+          <circle cx="235" cy="235" r="100" fill="#e85d10"/>
+          <circle cx="235" cy="235" r="100" fill="none" stroke="#1a1205" stroke-width="1.2" opacity="0.45"/>
+          <circle cx="235" cy="235" r="92"  fill="none" stroke="#0d4a22" stroke-width="0.6" opacity="0.35"/>
+          <circle cx="235" cy="235" r="80"  fill="none" stroke="#0d4a22" stroke-width="0.6" opacity="0.30"/>
+
+          <text x="235" y="194" text-anchor="middle"
+                font-family="Josefin Sans, sans-serif" font-size="13" font-weight="700"
+                fill="#1a1205" letter-spacing="3" opacity="0.92">SOUND CLUB</text>
+
+          <line x1="200" y1="208" x2="270" y2="208" stroke="#1a1205" stroke-width="0.8" opacity="0.45"/>
+
+          <text x="235" y="270" text-anchor="middle"
+                font-family="Josefin Sans, sans-serif" font-size="9" font-weight="600"
+                fill="#1a1205" letter-spacing="2.5" opacity="0.80">MILWAUKEE · WI</text>
+          <text x="235" y="285" text-anchor="middle"
+                font-family="Josefin Sans, sans-serif" font-size="8" font-weight="600"
+                fill="#1a1205" letter-spacing="2" opacity="0.70">33⅓ RPM · LONG PLAY</text>
+
+          <circle cx="235" cy="235" r="6.5" fill="#080500"/>
+          <circle cx="235" cy="235" r="3"   fill="#f5efd8"/>
+        </svg>
+      </div>
+
+      <div class="logo-title">
+        <span class="word">Vinyl Hour</span>
+      </div>
+
+      <div class="logo-subtitle">Bring your own vinyl — inspired by the theme or something you want to share</div>
+
+    </div>
+
+    <!-- BODY ROW: SCHEDULE + META -->
+    <div class="body-row">
+
+      <div class="schedule">
+        <div class="event">
+          <div class="theme"><span class="num">1.</span>LATIN JAZZ</div>
+          <div class="when">THU · MAY 7 · 7–9PM</div>
+          <div class="where">ZOCALO · 636 S 6TH ST</div>
+        </div>
+        <div class="event">
+          <div class="theme"><span class="num">2.</span>OPEN SPIN</div>
+          <div class="when">THU · MAY 14 · 7–9PM</div>
+          <div class="where">MIDWEST SAD · 601 S 6TH ST</div>
+        </div>
+        <div class="event">
+          <div class="theme"><span class="num">3.</span>ZODIAC SESSIONS</div>
+          <div class="when">FRI · MAY 22 · 6–8PM</div>
+          <div class="where">LA FINCA · 3558 E SIVYER AVE</div>
+        </div>
+        <div class="event">
+          <div class="theme"><span class="num">4.</span>OPEN SPIN</div>
+          <div class="when">THU · MAY 28 · 7–9PM</div>
+          <div class="where">MIDWEST SAD · 601 S 6TH ST</div>
+        </div>
+      </div>
+
+      <div class="meta-block">
+        <div class="swatches">
+          <div class="swatch" style="background:#0d4a22"></div>
+          <div class="swatch" style="background:#1a6b36"></div>
+          <div class="swatch" style="background:#e85d10"></div>
+          <div class="swatch" style="background:#f5efd8"></div>
+          <div class="swatch" style="background:#b8ae90"></div>
+        </div>
+        <div class="meta-line divider">MIDWEST SAD | ZOCALO | LA FINCA</div>
+        <div class="meta-line">PRESENTED BY SOUND CLUB</div>
+        <div class="meta-line accent">MAY 2026</div>
+        <div class="meta-line">CURATED BY @MKESOUNDCLUB</div>
+        <div class="meta-line">+ BRING YOUR OWN VINYL</div>
+        <div class="meta-line">+ ALL ARE WELCOME</div>
+        <div class="meta-line runtime">4 nights · weekly sessions</div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer-row">
+
+      <div class="scan-mark">
+        <div class="barcode">
+          <span style="height:40%"></span>
+          <span style="height:80%"></span>
+          <span style="height:55%"></span>
+          <span style="height:100%"></span>
+          <span style="height:30%"></span>
+          <span style="height:70%"></span>
+          <span style="height:90%"></span>
+          <span style="height:45%"></span>
+          <span style="height:60%"></span>
+          <span style="height:85%"></span>
+          <span style="height:40%"></span>
+          <span style="height:75%"></span>
+          <span style="height:55%"></span>
+          <span style="height:95%"></span>
+          <span style="height:35%"></span>
+          <span style="height:65%"></span>
+          <span style="height:80%"></span>
+          <span style="height:50%"></span>
+          <span style="height:70%"></span>
+          <span style="height:40%"></span>
+        </div>
+        <div class="handle">@MKESOUNDCLUB</div>
+      </div>
+
+      <div class="month-stamp">MAY <span class="twentysix">2026</span></div>
+
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
